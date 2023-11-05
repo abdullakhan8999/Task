@@ -9,10 +9,11 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 //middleware
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(
    cors({
       origin: process.env.CLIENT_API,

@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../Actions/userActions";
-import showNotification from "../../../Utils/showNotification";
+import { logoutUser } from "../Actions/userActions";
+import showNotification from "../Utils/showNotification";
 
 const Navbar = () => {
+  // Methods
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
-  const [menuState, setMenuState] = useState(false);
   let Location = useLocation();
+
+  //states
+  const [menuState, setMenuState] = useState(false);
   const [path, setPath] = useState(Location.pathname);
+  const { user } = useSelector((state) => state.user);
+
+  //Effects
   useEffect(() => {
     setPath(Location.pathname);
   }, [Location.pathname]);
-
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth <= 768) {
@@ -29,6 +33,7 @@ const Navbar = () => {
     };
   }, []);
 
+  //functions
   const handleLogout = () => {
     dispatch(logoutUser());
     showNotification("Logout Successfully", "success");
@@ -81,9 +86,8 @@ const Navbar = () => {
             <li>
               <Link
                 to="/"
-                // className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                 className={`block py-2 pl-3 pr-4 rounded   md:border-0  md:p-0  ${
-                  path != "/auth" ? "text-blue-500" : "text-white"
+                  path === "/" ? "text-blue-500" : "text-white"
                 } md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent`}
                 aria-current="page"
                 onClick={() => setMenuState(false)}
@@ -95,9 +99,8 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/auth"
-                  // className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                   className={`block py-2 pl-3 pr-4 rounded   md:border-0  md:p-0  ${
-                    path == "/auth" ? "text-blue-500" : "text-white"
+                    path === "/auth" ? "text-blue-500" : "text-white"
                   } md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent`}
                   aria-current="page"
                   onClick={() => setMenuState(false)}

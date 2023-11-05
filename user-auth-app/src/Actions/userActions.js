@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import {
    passwordResetRequested,
    passwordResetSuccess,
@@ -16,9 +17,8 @@ import {
    userSignupSuccess,
    clearError
 } from "../Reducers/userReducer";
-import showNotification from "../../Utils/showNotification";
+import showNotification from "../Utils/showNotification";
 const BASE_URL = "http://localhost:8080";
-import { decode } from "jwt-decode";
 
 // user Login
 export const loginGoogle = (credentialResponse) => async (dispatch) => {
@@ -26,13 +26,27 @@ export const loginGoogle = (credentialResponse) => async (dispatch) => {
       dispatch(userLoginRequest());
       let token = credentialResponse.credential;
       localStorage.setItem('token', token);
-      let user = decode(token); // Use the decode function
+      // Use the decode function
+      let user = jwtDecode(credentialResponse.credential);
+      //FETCH USER
+      const config = {
+         headers: { "Content-Type": "application/json" },
+         // withCredentials: true,
+      };
+      let userData = {
+         name: user.name,
+         email: user.email,
+         imgUrl: user.picture,
+      }
 
       showNotification("Login Successfully", "success");
       dispatch(userLoginSuccess({
          user,
          token,
       }));
+
+      await axios.post(BASE_URL + `/auth/google/register`, userData, config);
+
 
    } catch (error) {
       console.log("Error while login user:", error.response?.data?.message);
@@ -52,6 +66,7 @@ export const login = (email, password) => async (dispatch) => {
 
       const config = {
          headers: { "Content-Type": "application/json" },
+         withCredentials: true,
       };
 
       const { data } = await axios.post(
@@ -136,6 +151,12 @@ export const fetchUserInfo = () => async (dispatch) => {
          showNotification("User not authenticated!", "warning");
          return;
       }
+      if (token) {
+         let user = jwtDecode(token);
+         if (user.sub) {
+            return dispatch(getUserInfoReceived({ user }));
+         }
+      }
 
       const { data } = await axios.get(BASE_URL + `/auth/me`, {
          headers: {
@@ -143,9 +164,9 @@ export const fetchUserInfo = () => async (dispatch) => {
          },
       }, config);
 
-      const { status, user, } = data;
+      const { user, } = data;
 
-      dispatch(getUserInfoReceived({ status, user }));
+      dispatch(getUserInfoReceived({ user }));
    } catch (error) {
       // console.log("Error while fetchUserInfo:", error);
       console.log("Error while fetchUserInfo:", error.response?.data?.message);

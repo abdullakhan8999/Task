@@ -36,6 +36,26 @@ exports.registerUser = async (req, res, next) => {
    });
    sendToken(user, 200, res)
 };
+//google User register 
+exports.googleRegisterUser = async (req, res, next) => {
+   const { name, email, imgUrl } = req.body;
+   let user = await User.findOne({ email: email });
+   if (user) return res.status(200).json({
+      message: "User Already exists."
+   })
+
+   user = await User.create({
+      name,
+      email,
+      avatar: {
+         public_id: imgUrl,
+         url: imgUrl,
+      },
+   });
+   res.status(200).json({
+      message: "User Created."
+   })
+};
 
 //Get user detailed
 exports.getUserDetails = async (req, res, next) => {
@@ -171,5 +191,5 @@ exports.resetPasswordUpdate = async (req, res, next) => {
    await user.save();
 
    // Redirect the user to the home page or a success page
-   res.redirect("http://127.0.0.1:5173/"); // Change this to the appropriate URL
+   res.redirect(process.env.CLIENT_API); // Change this to the appropriate URL
 }

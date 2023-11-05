@@ -1,3 +1,5 @@
+import React from "react";
+
 const LabelComponent = ({ isLogin, name, HtmlFor }) => {
   return (
     <label

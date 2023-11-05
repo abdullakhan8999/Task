@@ -1,29 +1,29 @@
-import "./App.css";
-import React from "react";
+import React from 'react';
+import Home from "./Pages/Home";
+import Navbar from './Components/Navbar';
+import ForgotPassword from "./Pages/ForgotPassword";
+import showNotification from "./Utils/showNotification";
+import Auth from "./Pages/AuthPage";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchUserInfo } from "./Actions/userActions.js";
+
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import Navbar from "./Components/Navbar/Navbar.jsx";
-import { useEffect } from "react";
-import { fetchUserInfo } from "./Actions/userActions.js";
-import Home from "./Pages/Home/Home.jsx";
-import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword.jsx";
-import LogInSignUp from "./Pages/LogInSignUp/LogInSignUp.jsx";
-import showNotification from "../Utils/showNotification.js";
 
-function App() {
+const App = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     showNotification("Welcome to User Auth");
     dispatch(fetchUserInfo());
+    // eslint-disable-next-line
   }, []);
-
   return (
     <Router>
       <Navbar />
@@ -33,7 +33,7 @@ function App() {
           path="/"
           element={user ? <Home /> : <Navigate to="/auth" />}
         />
-        <Route exact path="/auth" element={<LogInSignUp />} />
+        <Route exact path="/auth" element={<Auth />} />
         <Route
           exact
           path="/forgotPassword"
@@ -41,7 +41,7 @@ function App() {
         />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
