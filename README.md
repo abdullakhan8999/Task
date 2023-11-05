@@ -6,7 +6,7 @@ Welcome to the User Authentication App – a project showcasing my skills in cre
 
 ## Installation
 
-To get started, you can clone the repository using the following command:
+To get started with frontend, you can clone the repository using the following command:
 
 ```bash
 git clone https://github.com/abdullakhan8999/user-auth-app.git
@@ -30,6 +30,34 @@ To experience the full potential of this project, start the development server w
 
 ```bash
 npm start
+```
+
+To build the application for production use:
+
+```bash
+npm run build
+```
+
+To get started with Backend:
+
+Next, navigate to the project directory:
+
+```bash
+cd backend
+```
+
+Install the necessary dependencies:
+
+```bash
+npm install
+```
+
+## Usage
+
+To experience the full potential of this project, start the development server with:
+
+```bash
+npm run dev
 ```
 
 To build the application for production use:
