@@ -10,8 +10,7 @@ if (process.env.NODE_ENV !== "production") {
 
 //middleware
 app.set("view engine", "ejs");
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
+app.use(express.json());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(

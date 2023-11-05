@@ -1,14 +1,7 @@
 const { Router } = require("express");
-const passport = require("passport");
 const { registerUser, getUserDetails, loginUser, forgotPassword, resetPassword, resetPasswordUpdate, googleRegisterUser } = require("../Controllers/AuthController.js");
 const { isAuthenticatedUser } = require("../Middleware/auth.js");
 const router = Router();
-
-
-router.get("/logout", (req, res) => {
-   req.logout();
-   res.redirect(process.env.CLIENT_API);
-});
 
 //register user Router
 router.post("/register", registerUser);

@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
    resetPasswordExpire: Date,
 })
 
-//Hash password
+// before saving password hash it
 userSchema.pre("save", async function (next) {
    if (!this.isModified("password")) {
       next();
@@ -53,7 +53,7 @@ userSchema.pre("save", async function (next) {
    this.password = await bcrypt.hash(this.password, 10);
 });
 
-// get token method
+// get token 
 userSchema.methods.getJwtToken = function () {
    return jwt.sign(
       {
@@ -66,12 +66,12 @@ userSchema.methods.getJwtToken = function () {
    );
 };
 
-//Compare password
+// Compare passwords
 userSchema.methods.comparePassword = async function (enteredPassword) {
    return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Generating Password Reset Token
+// token for reset password
 userSchema.methods.getResetPasswordToken = function () {
    // Generating Token
    const resetToken = crypto.randomBytes(20).toString("hex");

@@ -36,6 +36,7 @@ exports.registerUser = async (req, res, next) => {
    });
    sendToken(user, 200, res)
 };
+
 //google User register 
 exports.googleRegisterUser = async (req, res, next) => {
    const { name, email, imgUrl } = req.body;
@@ -90,6 +91,7 @@ exports.loginUser = async (req, res, next) => {
    sendToken(user, 200, res);
 };
 
+// forgot Password
 exports.forgotPassword = async (req, res, next) => {
    const { email } = req.body;
    const user = await User.findOne({ email });
@@ -155,6 +157,7 @@ exports.forgotPassword = async (req, res, next) => {
    }
 }
 
+// reset Password 
 exports.resetPassword = async (req, res, next) => {
    // Extract the reset token from the URL parameters
    const resetToken = req.params.token;
@@ -163,6 +166,7 @@ exports.resetPassword = async (req, res, next) => {
    res.render("reset-password-form", { resetToken });
 };
 
+// update reset Password 
 exports.resetPasswordUpdate = async (req, res, next) => {
    const { password } = req.body;
    const resetToken = req.params.token;
