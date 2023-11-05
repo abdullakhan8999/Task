@@ -69,7 +69,7 @@ For any inquiries or support, you can reach out to me:
 
 - Name: Patan Abdulla Khan
 - Email: abdullakhan8999@gmail.com
-- GitHub: [your-username](https://github.com/abdullakhan8999)
+- GitHub: [abdullakhan8999](https://github.com/abdullakhan8999)
 
 Let's embark on this exciting journey together as we explore the wonders of the User Authentication App! 🚀🌟
 
